@@ -59,6 +59,7 @@ package leetcode.editor.cn;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Stack;
 
 /**
  * 有效的括号
@@ -77,40 +78,33 @@ public class P20_ValidParentheses{
 //leetcode submit region begin(Prohibit modification and deletion)
 class Solution {
     public boolean isValid(String s) {
-    	if("".equals(s) || s.length()%2 !=0){
-    		return false;
-		}
-        ArrayList<Integer> list = new ArrayList<>();
-        for (int i = 0; i < s.length(); i++) {
-            switch (s.charAt(i)) {
-                case '(':
-                    list.add(1);
-                    break;
-                case ')':
-                    list.add(-1);
-                    break;
-                case '[':
-                    list.add(2);
-                    break;
-                case ']':
-                    list.add(-2);
-                    break;
-                case '{':
-                    list.add(3);
-                    break;
-                case '}':
-                    list.add(-3);
-                    break;
-            }
-        }
-        for (int i = 0; i < list.size(); i++) {
-            for (int j = list.size()-1; j >i ; j--) {
-               if(list.get(j).equals(-list.get(i))){
+        Stack<Character> stack = new Stack<>();
+        char[] charArray = s.toCharArray();
 
-               }
+        for (char ch : charArray) {
+            //如果是左括号则直接入栈
+            if (ch == '(' || ch == '{' || ch == '[') {
+                stack.push(ch);
+            } else {
+                //如果是右括号，并且此时栈不为空
+                if (!stack.isEmpty()) {
+                    if (ch == ')') {
+                        if (stack.pop() != '(')
+                            return false;
+                    } else if (ch == '}') {
+                        if (stack.pop() != '{')
+                            return false;
+                    } else {
+                        if (stack.pop() != '[')
+                            return false;
+                    }
+                }
+                else{ //此时栈为空，但却来了个右括号，也直接返回false
+                    return false;
+                }
             }
-            list.get(i);
         }
+        return stack.isEmpty();
 
     }
 }
