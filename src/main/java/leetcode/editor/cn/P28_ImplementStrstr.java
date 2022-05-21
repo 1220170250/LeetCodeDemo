@@ -48,7 +48,7 @@ public class P28_ImplementStrstr{
 	 public static void main(String[] args) {
 	 	 //测试代码
 	 	 Solution solution = new P28_ImplementStrstr().new Solution();
-		 System.out.println(solution.strStr("hello","ll"));
+		 System.out.println(solution.strStr("a","aaa"));
 	 }
 	 
 //力扣代码
@@ -63,8 +63,8 @@ class Solution {
 
 		for (int i = 0; i < s.length; i++) {
 			if (s[i] == n[0]) {
-				for (int j = i+1; j < i+n.length; j++) {
-					if(s[j] != n[j-i]){
+				for (int j = i+1; j < i + n.length; j++) {
+					if( j>=s.length || s[j] != n[j-i]){
 						return -1;
 					}
 				}
